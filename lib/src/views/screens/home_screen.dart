@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_template/src/model/apis/api_response.dart';
-import 'package:flutter_provider_template/src/view_model/post_view_model.dart';
+import 'package:flutter_provider_template/src/view_model/posts_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'error_post_screen.dart';
@@ -12,34 +12,34 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostViewModel>(context);
+    final postViewModel = Provider.of<PostsViewModel>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Consumer<PostViewModel>(
+          title: Consumer<PostsViewModel>(
               builder: (context, value, _) =>
-                  value.status == PostStatus.Fetching
+                  value.status == PostsStatus.Fetching
                       ? Text("Loading")
-                      : Text("Post count: ${value.post?.length}")),
+                      : Text("Post count: ${value.posts.length}")),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => postViewModel.addPost(),
           child: Icon(Icons.add),
         ),
-        body: getPostWidget(postViewModel.response, context));
+        body: getPostWidget(context));
   }
 
-  getPostWidget(ApiResponse apiResponse, context) {
-    final postViewModel = Provider.of<PostViewModel>(context);
+  getPostWidget(context) {
+    final postViewModel = Provider.of<PostsViewModel>(context);
 
-    switch (apiResponse.status) {
-      case Status.INITIAL:
+    switch (postViewModel.status) {
+      case PostsStatus.Initial:
         postViewModel.getAllPosts();
         return LoadingWidget();
-      case Status.COMPLETED:
+      case PostsStatus.Fetch:
         return FetchPostScreen();
-      case Status.LOADING:
+      case PostsStatus.Fetching:
         return LoadingWidget();
-      case Status.ERROR:
+      case PostsStatus.Error:
         return ErrorPostScreen();
       default:
         return LoadingWidget();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_template/src/view_model/post_view_model.dart';
+import 'package:flutter_provider_template/src/view_model/posts_view_model.dart';
 import 'package:provider/provider.dart';
 
 /// Success view afetr success to get the posts or make any post
@@ -8,15 +8,16 @@ class FetchPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PostViewModel>(
-      builder: (context, value, ___) => RefreshIndicator(
-        onRefresh: () => value.getAllPosts(),
+    return Consumer<PostsViewModel>(
+      builder: (context, postsController, _) => RefreshIndicator(
+        onRefresh: () => postsController.getAllPosts(),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List<Widget>.generate(
-                value.post!.length,
+                //TODO Listview Builder
+                postsController.posts.length,
                 (int index) => Container(
                       child: Column(
                         children: [
@@ -25,7 +26,7 @@ class FetchPostScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Text(
-                                value.post![index].text!,
+                                postsController.posts[index].text!,
                                 textAlign: TextAlign.left,
                               ),
                             ),

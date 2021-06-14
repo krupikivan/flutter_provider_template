@@ -5,13 +5,11 @@ import 'package:flutter_provider_template/src/model/service/implement/post_servi
 import 'package:intl/intl.dart';
 import '../../post.dart';
 
-class PostRepository {
+class PostsRepository {
   BaseService _postService = PostService();
 
   Future<List<Post>> getAllPosts() async {
-    final List<Post> response =
-        await _postService.getResponse(Endpoint.getAllPosts);
-
+    final List<Post> response = await _postService.getResponse();
     return response;
   }
 

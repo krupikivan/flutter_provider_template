@@ -7,12 +7,12 @@ import 'package:flutter_provider_template/src/model/service/implement/base_servi
 import '../../post.dart';
 
 class PostService extends BaseService {
-  final Dio? http = Dio();
+  final Dio http = Dio();
 
   @override
-  Future<Post?> savePost(String url, Post post) async {
+  Future<Post> savePost(String url, Post post) async {
     try {
-      final response = await http!.post(Endpoint.savePost, data: post.toJson());
+      final response = await http.post(Endpoint.savePost, data: post.toJson());
       return Post.fromJson(response.data);
     } on SocketException {
       throw FetchDataException('No Internet Connection');
@@ -20,9 +20,9 @@ class PostService extends BaseService {
   }
 
   @override
-  Future<List<Post>> getResponse(String url) async {
+  Future<List<Post>> getResponse() async {
     try {
-      final response = await http!.get(url);
+      final response = await http.get(Endpoint.getAllPosts);
       final List<dynamic> posts = response.data!;
       final List<Post> returnPosts = posts
           .map((dynamic post) => Post.fromJson(post as Map<String, dynamic>))
