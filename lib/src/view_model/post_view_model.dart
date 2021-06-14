@@ -33,11 +33,26 @@ class PostViewModel with ChangeNotifier {
       final List<Post> posts = await PostRepository().getAllPosts();
       await Future<dynamic>.delayed(Duration(seconds: 2));
       _apiResponse = ApiResponse.completed(posts);
+      _post = posts;
       _status = PostStatus.Fetch;
     } catch (e) {
       _apiResponse = ApiResponse.error(e.toString());
       _status = PostStatus.Error;
     }
     notifyListeners();
+  }
+
+  Future<void> addPost() async {
+    _status = PostStatus.Fetching;
+    _apiResponse = ApiResponse.loading('Fetching data');
+    notifyListeners();
+    try {
+      await PostRepository().savePost();
+      await Future<dynamic>.delayed(Duration(seconds: 2));
+      getAllPosts();
+    } catch (e) {
+      _apiResponse = ApiResponse.error(e.toString());
+      _status = PostStatus.Error;
+    }
   }
 }

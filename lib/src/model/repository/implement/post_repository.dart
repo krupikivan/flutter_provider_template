@@ -1,9 +1,10 @@
 import 'package:flutter_provider_template/src/model/constants/endpoint.dart';
+import 'package:flutter_provider_template/src/model/constants/string.dart';
 import 'package:flutter_provider_template/src/model/service/implement/base_service.dart';
 import 'package:flutter_provider_template/src/model/service/implement/post_service.dart';
+import 'package:intl/intl.dart';
 import '../../post.dart';
 
-/// Repository to model the data before send to the service pattern to make request
 class PostRepository {
   BaseService _postService = PostService();
 
@@ -14,11 +15,13 @@ class PostRepository {
     return response;
   }
 
-  // Future<Post> savePost(Post post) async {
-  //   post.creationDate = DateFormat(commonDateFormat).format(DateTime.now());
+  Future<Post> savePost() async {
+    Post post = Post(
+        id: DateTime.now().millisecondsSinceEpoch,
+        text: "New post at ${DateTime.now().millisecondsSinceEpoch}",
+        creationDate: DateFormat(commonDateFormat).format(DateTime.now()));
+    final Post response = await _postService.savePost(Endpoint.savePost, post);
 
-  //   final Response<dynamic>? response = await _postService.savePost(post);
-
-  //   return Post.fromJson(response!.data! as Map<String, dynamic>);
-  // }
+    return response;
+  }
 }

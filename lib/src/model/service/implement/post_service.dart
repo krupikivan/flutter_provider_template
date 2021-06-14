@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_provider_template/src/model/apis/app_exception.dart';
+import 'package:flutter_provider_template/src/model/constants/endpoint.dart';
 import 'package:flutter_provider_template/src/model/service/implement/base_service.dart';
 
 import '../../post.dart';
@@ -8,13 +9,15 @@ import '../../post.dart';
 class PostService extends BaseService {
   final Dio? http = Dio();
 
-  // Future<Response<List<dynamic>>> getAllPosts() async {
-  //   return http!.get(Endpoint.getAllPosts);
-  // }
-
-  // Future<Response<Map<String, dynamic>>?> savePost(Post post) {
-  //   return http!.post(Endpoint.savePost, data: post.toJson());
-  // }
+  @override
+  Future<Post?> savePost(String url, Post post) async {
+    try {
+      final response = await http!.post(Endpoint.savePost, data: post.toJson());
+      return Post.fromJson(response.data);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+  }
 
   @override
   Future<List<Post>> getResponse(String url) async {

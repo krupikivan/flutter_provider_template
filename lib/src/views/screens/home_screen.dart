@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_template/src/model/apis/api_response.dart';
-import 'package:flutter_provider_template/src/model/constants/string.dart';
-import 'package:flutter_provider_template/src/model/post.dart';
-import 'package:flutter_provider_template/src/view_model/post_view_model.dart';
 import 'package:flutter_provider_template/src/view_model/post_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -18,22 +15,28 @@ class HomeScreen extends StatelessWidget {
     final postViewModel = Provider.of<PostViewModel>(context);
     return Scaffold(
         appBar: AppBar(
-          title: const Text(appName),
+          title: Consumer<PostViewModel>(
+              builder: (context, value, _) =>
+                  value.status == PostStatus.Fetching
+                      ? Text("Loading")
+                      : Text("Post count: ${value.post?.length}")),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => postViewModel.getAllPosts(),
+          onPressed: () => postViewModel.addPost(),
           child: Icon(Icons.add),
         ),
-        body: getPostWidget(postViewModel.response));
+        body: getPostWidget(postViewModel.response, context));
   }
 
-  getPostWidget(ApiResponse apiResponse) {
-    List<Post>? postList = apiResponse.data as List<Post>?;
+  getPostWidget(ApiResponse apiResponse, context) {
+    final postViewModel = Provider.of<PostViewModel>(context);
+
     switch (apiResponse.status) {
       case Status.INITIAL:
+        postViewModel.getAllPosts();
         return LoadingWidget();
       case Status.COMPLETED:
-        return FetchPostScreen(posts: postList);
+        return FetchPostScreen();
       case Status.LOADING:
         return LoadingWidget();
       case Status.ERROR:

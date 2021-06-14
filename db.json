@@ -1,64 +1,49 @@
 {
   "posts": [
     {
-      "id": 3,
-      "creation-date": "2021-06-02 10:11",
-      "text": "This is another post!"
+      "id": 1623690050335,
+      "text": "New post at 1623690050335",
+      "creation-date": "2021-06-14 14:00"
     },
     {
-      "id": 2,
-      "creation-date": "2021-06-02 12:11",
-      "text": "This is a post!"
+      "id": 1623690058931,
+      "text": "New post at 1623690058931",
+      "creation-date": "2021-06-14 14:00"
     },
     {
-      "id": 1,
-      "creation-date": "2021-06-01 14:11",
-      "text": "First!"
+      "id": 1623690084452,
+      "text": "New post at 1623690084452",
+      "creation-date": "2021-06-14 14:01"
     },
     {
-      "text": "I just added this from Postman",
-      "creation-date": "2021-06-03 11:10",
-      "id": 5
+      "id": 1623690107810,
+      "text": "New post at 1623690107810",
+      "creation-date": "2021-06-14 14:01"
     },
     {
-      "text": "I just added this from Postman2",
-      "creation-date": "2021-06-04 10:10",
-      "id": 6
+      "id": 1623690114419,
+      "text": "New post at 1623690114419",
+      "creation-date": "2021-06-14 14:01"
     },
     {
-      "id": 7,
-      "text": "Idk whats going on",
-      "creation-date": "2021-06-09 15:32"
+      "id": 1623690123497,
+      "text": "New post at 1623690123497",
+      "creation-date": "2021-06-14 14:02"
     },
     {
-      "id": 8,
-      "text": "Can we go to another future?",
-      "creation-date": "2021-06-09 15:32"
+      "id": 1623690447224,
+      "text": "New post at 1623690447225",
+      "creation-date": "2021-06-14 14:07"
     },
     {
-      "id": 9,
-      "text": "Can we fly?",
-      "creation-date": "2021-06-09 15:34"
+      "id": 1623690475102,
+      "text": "New post at 1623690475103",
+      "creation-date": "2021-06-14 14:07"
     },
     {
-      "id": 10,
-      "text": "Test this comment",
-      "creation-date": "2021-06-09 15:34"
-    },
-    {
-      "id": 11,
-      "text": "Test another comment",
-      "creation-date": "2021-06-09 15:34"
-    },
-    {
-      "id": 12,
-      "text": "Test another comment",
-      "creation-date": "2021-06-09 15:34"
-    },
-    {
-      "id": 13,
-      "text": "This is one of the bests comments that I ever saw in my life",
-      "creation-date": "2021-06-09 15:35"
+      "id": 1623690483407,
+      "text": "New post at 1623690483407",
+      "creation-date": "2021-06-14 14:08"
     }
   ]
 }
