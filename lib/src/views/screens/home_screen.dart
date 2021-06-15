@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_template/src/model/apis/api_response.dart';
+import 'package:flutter_provider_template/src/model/repository/implement/posts_repository.dart';
+import 'package:flutter_provider_template/src/model/repository/ipost_repository.dart';
 import 'package:flutter_provider_template/src/view_model/posts_view_model.dart';
 import 'package:provider/provider.dart';
 
+import 'add_post_screen.dart';
 import 'error_post_screen.dart';
 import 'fetch_post_screen.dart';
 import '../widgets/loading_widget.dart';
@@ -12,20 +15,22 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostsViewModel>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Consumer<PostsViewModel>(
-              builder: (context, value, _) =>
-                  value.status == PostsStatus.Fetching
-                      ? Text("Loading")
-                      : Text("Post count: ${value.posts.length}")),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => postViewModel.addPost(),
-          child: Icon(Icons.add),
-        ),
-        body: getPostWidget(context));
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => addPostScreen(context),
+          ),
+        ],
+        title: Consumer<PostsViewModel>(
+            builder: (context, value, _) => value.status == PostsStatus.Fetching
+                ? Text("Loading")
+                : Text("Post count: ${value.posts.length}")),
+      ),
+      // body: SizedBox()),
+      body: getPostWidget(context),
+    );
   }
 
   getPostWidget(context) {

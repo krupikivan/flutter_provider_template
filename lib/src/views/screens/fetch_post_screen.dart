@@ -9,37 +9,23 @@ class FetchPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<PostsViewModel>(
-      builder: (context, postsController, _) => RefreshIndicator(
-        onRefresh: () => postsController.getAllPosts(),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List<Widget>.generate(
-                //TODO Listview Builder
-                postsController.posts.length,
-                (int index) => Container(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Text(
-                                postsController.posts[index].text!,
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ),
-                          Divider(
-                            color: Colors.black45,
-                          )
-                        ],
-                      ),
-                    )),
-          ),
-        ),
-      ),
-    );
+        builder: (context, postsController, _) => RefreshIndicator(
+              onRefresh: () => postsController.getAllPosts(),
+              child: ListView.separated(
+                separatorBuilder: (context, index) =>
+                    Divider(color: Colors.black45),
+                itemCount: postsController.posts.length,
+                itemBuilder: (context, index) => SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      postsController.posts[index].text!,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
+              ),
+            ));
   }
 }

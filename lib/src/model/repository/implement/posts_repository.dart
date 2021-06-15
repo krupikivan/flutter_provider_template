@@ -1,25 +1,31 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_provider_template/src/model/constants/endpoint.dart';
 import 'package:flutter_provider_template/src/model/constants/string.dart';
-import 'package:flutter_provider_template/src/model/service/implement/base_service.dart';
-import 'package:flutter_provider_template/src/model/service/implement/post_service.dart';
 import 'package:intl/intl.dart';
 import '../../post.dart';
+import '../ipost_repository.dart';
 
-class PostsRepository {
-  BaseService _postService = PostService();
+class PostsRepository implements IPostsRepository {
+  PostsRepository({required this.http});
+  final Dio http;
 
   Future<List<Post>> getAllPosts() async {
-    final List<Post> response = await _postService.getResponse();
-    return response;
+    final Response response = await http.get(Endpoint.getAllPosts);
+    final List<dynamic> resList = response.data;
+    final List<Post> posts =
+        resList.map((dynamic post) => Post.fromJson(post)).toList();
+    return posts;
   }
 
-  Future<Post> savePost() async {
-    Post post = Post(
+  @override
+  Future<Post> savePost(Post post) async {
+    Post newPost = Post(
         id: DateTime.now().millisecondsSinceEpoch,
-        text: "New post at ${DateTime.now().millisecondsSinceEpoch}",
+        text: post.text,
         creationDate: DateFormat(commonDateFormat).format(DateTime.now()));
-    final Post response = await _postService.savePost(Endpoint.savePost, post);
+    final Response response =
+        await http.post(Endpoint.savePost, data: newPost.toJson());
 
-    return response;
+    return response.data;
   }
 }
