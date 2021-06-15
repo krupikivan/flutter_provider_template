@@ -24,9 +24,11 @@ Future<void> addPostScreen(context) async {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Provider.of<PostsViewModel>(context, listen: false)
-                            .addPost(controller.value.text),
+                    onPressed: () {
+                      Provider.of<PostsViewModel>(context, listen: false)
+                          .addPost(controller.value.text);
+                      Navigator.of(context).pop();
+                    },
                     child: const Text('Save post'),
                   ),
                 ),
